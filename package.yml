@@ -1,0 +1,18 @@
+package: community.lazycat.app.chhoto-url
+name: Chhoto URL
+version: 0.0.0
+description: "Blazingly fast, simple self-hosted URL shortener with a SQLite backend."
+min_os_version: "1.5.0"
+homepage: https://github.com/SinTan1729/chhoto-url
+author: SinTan1729
+license: MIT
+permissions:
+  required:
+    - net.internet
+locales:
+  zh:
+    name: Chhoto URL
+    description: "极简自建短链服务：贴个长网址就得到短链接，响应极快，可选 API 密钥，数据存在本地 SQLite。"
+  en:
+    name: Chhoto URL
+    description: "Blazingly fast, simple self-hosted URL shortener with a SQLite backend."

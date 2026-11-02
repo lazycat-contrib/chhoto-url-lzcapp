@@ -1,0 +1,41 @@
+application:
+  subdomain: chhoto
+  multi_instance: false
+  upstreams:
+    - location: /package-licenses/
+      backend: file:///lzcapp/pkg/content/licenses/
+    - location: /
+      backend: http://chhoto:4567/
+
+services:
+  chhoto:
+    # upstream: sintan1729/chhoto-url:7.10.6
+    image: docker.1ms.run/sintan1729/chhoto-url:7.10.6
+    environment:
+      - |-
+        CHHOTO_PASSWORD={{ stable_secret "chhoto_access_password" | replace "\r" "" | replace "\n" "" }}
+      - |-
+        CHHOTO_SITE_URL=https://{{ .S.AppDomain }}
+      - CHHOTO_DB_URL=/data/urls.sqlite
+      - CHHOTO_SQLITE_USE_WAL_MODE=true
+      - CHHOTO_EXIT_ON_NO_AUTH=true
+    binds:
+      - /lzcapp/var/data:/data
+
+usage: |
+  Chhoto URL 是极简自建短链服务：贴长网址，得到短链接，响应极快。
+
+  使用方法：
+  1. 打开应用，输入访问口令。口令就是安装时那一项"访问口令"，去看安装参数即可。
+  2. 粘贴长网址，点生成，得到短链接；点复制即可分享。
+  3. 首页能看到已有短链接列表和点击数。
+
+  数据与安全：
+  - 短链数据保存在 /lzcapp/var/data/urls.sqlite，卸载应用会一并删除，请定期备份。
+  - 启用了 WAL 模式，读写更快，也更适合并发。
+  - 访问口令由平台稳定密钥生成，每个部署不同，不存在内置默认口令。
+  - 口令在传输中不加密，应用经懒猫入口走 HTTPS，请勿关闭入口鉴权。
+
+  说明：
+  - 单容器部署。
+  - 未做真机验证：登录、创建短链、跳转、点击数统计以及重启后持久化均未在设备上实测。

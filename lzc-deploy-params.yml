@@ -1,0 +1,12 @@
+params:
+  - id: access_password
+    type: secret
+    name: Access password
+    description: "Password used to open the shortener UI lhs and manage links. Without it anyone could create links."
+    default_value: "$random(len=20)"
+    optional: false
+locales:
+  zh:
+    access_password:
+      name: 访问口令
+      description: 打开短链管理界面的口令，至少 12 位。服务端强制要求，缺失则拒绝启动。
