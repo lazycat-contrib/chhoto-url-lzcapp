@@ -81,7 +81,7 @@ jobs:
               assert 'https://' in env, env
 
               # the password must never be shipped empty (upstream would then be open to all)
-              bad = [e for e in svc['environment'] if e.strip() == 'CHHOTO_PASSWORD=]
+              bad = [e for e in svc['environment'] if e.strip() == 'CHHOTO_PASSWORD=']
               assert not bad, bad
 
               assert any(b.endswith(':/data') for b in svc['binds']), svc['binds']
